@@ -1,0 +1,458 @@
+/* 遮罩层 */
+.payment-confirm-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 20rpx;
+  animation: fadeIn 0.3s ease-out;
+  box-sizing: border-box;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 弹窗容器 */
+.payment-confirm-container {
+  background: #fff;
+  border-radius: 20rpx;
+  max-width: 600rpx;
+  width: 90%;
+  max-height: 85vh; /* 增加最大高度，给更多空间 */
+  min-height: 480rpx;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(120rpx) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 头部 */
+.confirm-header {
+  padding: 30rpx 25rpx 20rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+  background: #fafafa;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #666;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background: #e8e8e8;
+  color: #333;
+  transform: scale(1.1);
+}
+
+.close-btn:active {
+  background: #d9d9d9;
+  transform: scale(0.95);
+}
+
+.header-icon {
+  font-size: 40rpx;
+  margin-bottom: 16rpx;
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.header-subtitle {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 内容区域 - 关键修复：确保正确的flex布局 */
+.confirm-content {
+  flex: 1;
+  min-height: 0; /* 重要：让flex子项能够正确缩小 */
+  padding: 15rpx 0 20rpx;
+  background: #f8f9fa;
+  overflow-y: auto; /* 确保垂直滚动 */
+  -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+}
+
+/* 确认项 */
+.confirm-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx 24rpx;
+  transition: all 0.3s ease;
+  min-height: 70rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  margin: 0 16rpx 12rpx;
+  box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.06);
+  border: 1rpx solid #f0f0f0;
+}
+
+.confirm-item:hover {
+  background-color: #f8fffe;
+  border-color: #52c41a;
+  transform: translateY(-1rpx);
+  box-shadow: 0 2rpx 8rpx rgba(82, 196, 26, 0.1);
+}
+
+.confirm-item:last-child {
+  margin-bottom: 16rpx; /* 增加底部间距，避免与按钮区域贴太近 */
+}
+
+.confirm-item.checked {
+  background: #f6ffed;
+  border-color: #52c41a;
+  box-shadow: 0 2rpx 8rpx rgba(82, 196, 26, 0.12);
+}
+
+.confirm-checkbox {
+  transform: scale(1.1);
+  margin-right: 6rpx;
+  margin-top: 2rpx;
+  flex-shrink: 0;
+}
+
+.confirm-text {
+  margin-left: 16rpx;
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.6;
+  flex: 1;
+  font-weight: 400;
+}
+
+/* 按钮区域 */
+.confirm-buttons {
+  display: flex;
+  gap: 16rpx;
+  padding: 20rpx 24rpx 24rpx;
+  border-top: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+  background: #fafafa;
+}
+
+.btn {
+  flex: 1;
+  height: 76rpx;
+  border-radius: 38rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-icon {
+  font-size: 24rpx;
+}
+
+.btn-service {
+  background: #1890ff;
+  color: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(24, 144, 255, 0.2);
+  border: 1rpx solid #1890ff;
+  font-weight: 500;
+}
+
+.btn-service:active {
+  background: #0e7ce8;
+  transform: scale(0.98);
+  box-shadow: 0 1rpx 4rpx rgba(24, 144, 255, 0.3);
+}
+
+.btn-confirm.enabled {
+  background: linear-gradient(135deg, #52c41a, #73d13d);
+  color: #fff;
+  box-shadow: 0 3rpx 12rpx rgba(82, 196, 26, 0.3);
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+  border: 1rpx solid #52c41a;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-confirm.enabled::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+}
+
+.btn-confirm.enabled:active::before {
+  width: 200%;
+  height: 200%;
+}
+
+.btn-confirm.enabled:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(82, 196, 26, 0.4);
+}
+
+.btn-confirm.disabled {
+  background: #f5f5f5;
+  color: #bbb;
+  box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.08);
+  transform: scale(0.98);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  border: 1rpx solid #d9d9d9;
+  font-weight: 400;
+}
+
+/* 平板专用适配 (768px+) */
+@media (min-width: 768px) {
+  .payment-confirm-mask {
+    padding: 40rpx 30rpx;
+  }
+  
+  .payment-confirm-container {
+    max-width: 800rpx;
+    width: 80%;
+    max-height: 90vh; /* 平板给更大高度 */
+    min-height: 600rpx;
+  }
+  
+  .confirm-header {
+    padding: 40rpx 30rpx 25rpx;
+  }
+  
+  .header-icon {
+    font-size: 48rpx;
+    margin-bottom: 20rpx;
+  }
+  
+  .header-title {
+    font-size: 36rpx;
+    margin-bottom: 16rpx;
+  }
+  
+  .header-subtitle {
+    font-size: 28rpx;
+  }
+  
+  .confirm-content {
+    padding: 20rpx 0 25rpx;
+  }
+  
+  .confirm-item {
+    padding: 25rpx 30rpx;
+    margin: 0 20rpx 16rpx;
+    min-height: 80rpx;
+  }
+  
+  .confirm-item:last-child {
+    margin-bottom: 20rpx;
+  }
+  
+  .confirm-text {
+    font-size: 28rpx;
+    line-height: 1.7;
+    margin-left: 20rpx;
+  }
+  
+  .confirm-checkbox {
+    transform: scale(1.2);
+    margin-top: 3rpx;
+  }
+  
+  .confirm-buttons {
+    padding: 25rpx 30rpx 30rpx;
+    gap: 20rpx;
+  }
+  
+  .btn {
+    height: 84rpx;
+    font-size: 28rpx;
+  }
+  
+  .btn-icon {
+    font-size: 26rpx;
+  }
+}
+
+/* 大屏平板适配 (1024px+) */
+@media (min-width: 1024px) {
+  .payment-confirm-container {
+    max-width: 900rpx;
+    width: 70%;
+    max-height: 85vh;
+    min-height: 650rpx;
+  }
+  
+  .confirm-header {
+    padding: 45rpx 35rpx 30rpx;
+  }
+  
+  .header-icon {
+    font-size: 52rpx;
+    margin-bottom: 24rpx;
+  }
+  
+  .header-title {
+    font-size: 38rpx;
+    margin-bottom: 18rpx;
+  }
+  
+  .header-subtitle {
+    font-size: 30rpx;
+  }
+  
+  .confirm-content {
+    padding: 25rpx 0 30rpx;
+  }
+  
+  .confirm-item {
+    padding: 30rpx 35rpx;
+    margin: 0 25rpx 18rpx;
+    min-height: 90rpx;
+  }
+  
+  .confirm-item:last-child {
+    margin-bottom: 25rpx;
+  }
+  
+  .confirm-text {
+    font-size: 30rpx;
+    line-height: 1.8;
+    margin-left: 24rpx;
+  }
+  
+  .confirm-checkbox {
+    transform: scale(1.3);
+    margin-top: 4rpx;
+  }
+  
+  .confirm-buttons {
+    padding: 30rpx 35rpx 35rpx;
+    gap: 24rpx;
+  }
+  
+  .btn {
+    height: 90rpx;
+    font-size: 30rpx;
+  }
+  
+  .btn-icon {
+    font-size: 28rpx;
+  }
+}
+
+/* 响应式适配 - 小屏设备 */
+@media (max-width: 600rpx) {
+  .payment-confirm-mask {
+    padding: 20rpx 16rpx;
+  }
+  
+  .payment-confirm-container {
+    width: 95%;
+    max-width: none;
+    max-height: 85vh; /* 小屏也给足够高度 */
+    min-height: 420rpx;
+  }
+  
+  .confirm-header {
+    padding: 24rpx 20rpx 16rpx;
+  }
+  
+  .close-btn {
+    top: 16rpx;
+    right: 16rpx;
+    width: 50rpx;
+    height: 50rpx;
+    font-size: 28rpx;
+  }
+  
+  .header-icon {
+    font-size: 36rpx;
+    margin-bottom: 12rpx;
+  }
+  
+  .header-title {
+    font-size: 28rpx;
+    margin-bottom: 8rpx;
+  }
+  
+  .header-subtitle {
+    font-size: 22rpx;
+  }
+  
+  .confirm-item {
+    padding: 16rpx 20rpx;
+    min-height: 60rpx;
+    margin: 0 12rpx 10rpx;
+  }
+  
+  .confirm-item:last-child {
+    margin-bottom: 12rpx;
+  }
+  
+  .confirm-text {
+    font-size: 24rpx;
+    margin-left: 12rpx;
+  }
+  
+  .confirm-checkbox {
+    transform: scale(1.0);
+    margin-top: 1rpx;
+  }
+  
+  .confirm-buttons {
+    padding: 16rpx 20rpx 20rpx;
+    gap: 12rpx;
+  }
+  
+  .btn {
+    font-size: 24rpx;
+    height: 70rpx;
+  }
+}
